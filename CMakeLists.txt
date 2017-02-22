@@ -34,6 +34,7 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
 
 set(SOURCE_FILES
     src/int.cpp
+    src/lexi.cpp
 )
 
 if(BUILD_STATIC)
@@ -54,10 +55,27 @@ endif()
 # TESTS
 # -----
 
+set(TEST_FILES
+    test/main.cpp
+    test/int.cpp
+)
+
 if(BUILD_TESTS)
     if(NOT TARGET gtest)
         add_subdirectory(googletest)
     endif()
+    add_executable(LexiTests ${TEST_FILES})
+    target_link_libraries(LexiTests
+        gtest
+        gtest_main
+        Lexi
+    )
+    set_target_properties(LexiTests PROPERTIES OUTPUT_NAME test)
+
+     add_custom_target(check_lexi
+        COMMAND $<TARGET_FILE:LexiTests>
+        DEPENDS LexiTests
+    )
 endif()
 
 
