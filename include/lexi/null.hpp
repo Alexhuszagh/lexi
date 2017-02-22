@@ -2,7 +2,7 @@
 //  :license: MIT, see LICENSE.md for more details.
 /**
  *  \addtogroup Lexi
- *  \brief Lexical formatting for floating-point types.
+ *  \brief Lexical formatting for null types.
  */
 
 #pragma once
@@ -16,21 +16,16 @@ namespace lexi
 // -------
 
 
-/** \brief Fast floating-point number formatter.
+/** \brief Generic null formatter.
  */
-class FormatFloat
+class FormatNull
 {
 protected:
-    char buffer_[detail::FLOAT_SIZE];
-    char *first;
-    char *last;
-
-    void format(long double value);
+    char buffer_[5];
 
 public:
-    FormatFloat(float value);
-    FormatFloat(double value);
-    FormatFloat(long double value);
+    FormatNull();
+    FormatNull(const std::nullptr_t nullp);
 
     // DATA
     size_t size() const;
@@ -42,13 +37,5 @@ public:
     explicit operator std::string() const;
 };
 
-
-/** \brief Fast floating-point number lexical reader.
- */
-class ExtractFloat
-{
-protected:
-
-};
 
 }   /* lexi */

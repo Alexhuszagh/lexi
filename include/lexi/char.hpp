@@ -2,12 +2,12 @@
 //  :license: MIT, see LICENSE.md for more details.
 /**
  *  \addtogroup Lexi
- *  \brief Lexical formatting for floating-point types.
+ *  \brief Lexical formatting for character types.
  */
 
 #pragma once
 
-#include "detail/fmt.hpp"
+#include <string>
 
 
 namespace lexi
@@ -16,21 +16,16 @@ namespace lexi
 // -------
 
 
-/** \brief Fast floating-point number formatter.
+/** \brief Generic character formatter.
  */
-class FormatFloat
+class FormatChar
 {
 protected:
-    char buffer_[detail::FLOAT_SIZE];
-    char *first;
-    char *last;
-
-    void format(long double value);
+    char buffer_[2];
 
 public:
-    FormatFloat(float value);
-    FormatFloat(double value);
-    FormatFloat(long double value);
+    FormatChar(const char c);
+    FormatChar(const unsigned char c);
 
     // DATA
     size_t size() const;
@@ -40,15 +35,6 @@ public:
 
     // CONVERSIONS
     explicit operator std::string() const;
-};
-
-
-/** \brief Fast floating-point number lexical reader.
- */
-class ExtractFloat
-{
-protected:
-
 };
 
 }   /* lexi */

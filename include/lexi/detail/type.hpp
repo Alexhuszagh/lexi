@@ -23,5 +23,8 @@ using enable_if_t = typename std::enable_if<B, T>::type;
 template <typename T, typename U>
 constexpr bool is_same_v = std::is_same<T, U>::value;
 
+template< class T >
+using underlying_type_t = typename std::underlying_type<T>::type;
+
 }   /* detail */
 }   /* lexi */

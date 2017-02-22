@@ -1,4 +1,3 @@
-//  :copyright: (c) 2012-2016 Victor Zverovich.
 //  :copyright: (c) 2016-2017 The Regents of the University of California.
 //  :license: MIT, see LICENSE.md for more details.
 /**
@@ -18,21 +17,17 @@ namespace lexi
 
 
 /** \brief Fast integer formatter.
- *
- *  \author Victor Zverovich.
- *  \license 2-clause BSD.
  */
 class FormatInt
 {
 protected:
     char buffer_[detail::INTEGER_SIZE];
-    char *data_;
-
-    char * unsigned_(unsigned long long value);
-    char * signed_(long long value);
-    void terminate();
+    char *first;
+    char *last;
 
 public:
+    FormatInt(int8_t value);
+    FormatInt(uint8_t value);
     FormatInt(short value);
     FormatInt(unsigned short value);
     FormatInt(int value);
@@ -45,8 +40,8 @@ public:
     // DATA
     size_t size() const;
     size_t length() const;
-    const char *data() const;
-    const char *c_str() const;
+    const char * data() const;
+    const char * c_str() const;
 
     // CONVERSIONS
     explicit operator std::string() const;

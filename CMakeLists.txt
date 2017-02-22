@@ -33,6 +33,13 @@ endif()
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
 
 set(SOURCE_FILES
+    src/detail/diyfp.cpp
+    src/detail/dtoa.cpp
+    src/detail/ieee754.cpp
+    src/detail/itoa.cpp
+    src/char.cpp
+    src/null.cpp
+    src/float.cpp
     src/int.cpp
     src/lexi.cpp
 )
@@ -57,6 +64,7 @@ endif()
 
 set(TEST_FILES
     test/main.cpp
+    test/float.cpp
     test/int.cpp
 )
 

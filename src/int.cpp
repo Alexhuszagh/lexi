@@ -1,4 +1,3 @@
-//  :copyright: (c) 2012-2016 Victor Zverovich.
 //  :copyright: (c) 2016-2017 The Regents of the University of California.
 //  :license: MIT, see LICENSE.md for more details.
 /**
@@ -7,6 +6,8 @@
  */
 
 #include "lexi/int.hpp"
+#include "lexi/detail/architecture.hpp"
+#include "lexi/detail/itoa.hpp"
 
 
 namespace lexi
@@ -15,109 +16,81 @@ namespace lexi
 // -------
 
 
-/** \brief Format unsigned value in reverse amd return number of digits.
- *
- *  Uses integer division for a group of two digits instead of for every
- *  digit, since it is slow. The idea comes from the talk by Alexandrescu
- *  "Three Optimization Tips for C++".
- */
-char * FormatInt::unsigned_(unsigned long long value)
-{
-    char *end = buffer_ + detail::INTEGER_SIZE - 1;
-    while (value >= 100) {
-        auto index = static_cast<unsigned int>((value % 100) * 2);
-        value /= 100;
-        *--end = detail::DIGITS[index + 1];
-        *--end = detail::DIGITS[index];
-    }
-    if (value < 10) {
-        *--end = static_cast<char>('0' + value);
-        return end;
-    }
-    unsigned int index = static_cast<unsigned int>(value * 2);
-    *--end = detail::DIGITS[index + 1];
-    *--end = detail::DIGITS[index];
-
-    return end;
-}
-
-
-/** \brief Format signed value in reverse amd return number of digits.
- */
-char * FormatInt::signed_(long long value)
-{
-    bool negative = value < 0;
-    unsigned long long number = negative ? -value : value;
-    data_ = unsigned_(number);
-    if (negative) {
-        *--data_ = '-';
-    }
-
-    return data_;
-}
-
-
-/** \brief Add null trailing character.
- */
-void FormatInt::terminate()
-{
-    buffer_[detail::INTEGER_SIZE - 1] = '\0';
-}
-
-
 FormatInt::FormatInt(short value)
 {
-    signed_(value);
-    terminate();
+    first = buffer_;
+    last = detail::i32toa(value, buffer_);
+    *last = '\0';
 }
 
 
-FormatInt::FormatInt(unsigned short value):
-    data_(unsigned_(value))
+FormatInt::FormatInt(unsigned short value)
 {
-    terminate();
+    first = buffer_;
+    last = detail::u32toa(value, buffer_);
+    *last = '\0';
 }
 
 
 FormatInt::FormatInt(int value)
 {
-    signed_(value);
-    terminate();
+    first = buffer_;
+    last = detail::i32toa(value, buffer_);
+    *last = '\0';
 }
 
 
-FormatInt::FormatInt(unsigned int value):
-    data_(unsigned_(value))
+FormatInt::FormatInt(unsigned int value)
 {
-    terminate();
+    first = buffer_;
+    last = detail::u32toa(value, buffer_);
+    *last = '\0';
 }
 
 
 FormatInt::FormatInt(long value)
 {
-    signed_(value);
-    terminate();
+    first = buffer_;
+
+    #if !defined(_WIN32) && SYSTEM_ARCHITECTURE == 64
+        // longs are 64-bits on all 64-bit systems except Windows
+        last = detail::i64toa(value, buffer_);
+    #else
+        last = detail::i32toa(value, buffer_);
+    #endif
+
+    *last = '\0';
 }
 
 
-FormatInt::FormatInt(unsigned long value):
-    data_(unsigned_(value))
+FormatInt::FormatInt(unsigned long value)
 {
-    terminate();
+    first = buffer_;
+
+    #if !defined(_WIN32) && SYSTEM_ARCHITECTURE == 64
+        // longs are 64-bits on all 64-bit systems except Windows
+        last = detail::u64toa(value, buffer_);
+    #else
+        last = detail::u32toa(value, buffer_);
+    #endif
+
+    *last = '\0';
 }
 
 
 FormatInt::FormatInt(long long value)
 {
-    signed_(value);
-    terminate();
+    first = buffer_;
+    last = detail::i64toa(value, buffer_);
+    *last = '\0';
 }
 
 
-FormatInt::FormatInt(unsigned long long value):
-    data_(unsigned_(value))
+FormatInt::FormatInt(unsigned long long value)
 {
-    terminate();
+    first = buffer_;
+    last = detail::u64toa(value, buffer_);
+    *last = '\0';
 }
 
 
@@ -125,7 +98,7 @@ FormatInt::FormatInt(unsigned long long value):
  */
 size_t FormatInt::size() const
 {
-    return buffer_ - data_ + detail::INTEGER_SIZE - 1;
+    return last - first;
 }
 
 
@@ -151,7 +124,7 @@ const char * FormatInt::data() const
  */
 const char * FormatInt::c_str() const
 {
-    return data_;
+    return first;
 }
 
 
