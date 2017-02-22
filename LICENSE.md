@@ -1,7 +1,7 @@
 The MIT License (MIT)
 =====================
 
-Lexi draws from other open source projects, including code from `Victor Zverovich, 2012 - 2016`. The licenses and attributions for derived works can be found in individual source and header files.
+Lexi draws from other open source projects, especially code from RapidJSON `THL A29 Limited, a Tencent company, and Milo Yip., 2015`. The licenses and attributions for derived works can be found in individual source and header files.
 
 All other copyright for project Lexi are held by `The Regents of the University of California, 2016-2017`. 
 

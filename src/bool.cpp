@@ -2,10 +2,10 @@
 //  :license: MIT, see LICENSE.md for more details.
 /**
  *  \addtogroup Lexi
- *  \brief Lexical formatting for null types.
+ *  \brief Lexical formatting for boolean types.
  */
 
-#include "lexi/null.hpp"
+#include "lexi/bool.hpp"
 
 #include <cstring>
 
@@ -16,35 +16,36 @@ namespace lexi
 // ---------
 
 // Use JS-like notation by default
-static const char NULL_STRING[5] = "null";
+static const char TRUE_STRING[5] = "true";
+static const char FALSE_STRING[6] = "false";
 
 // OBJECTS
 // -------
 
 
-FormatNull::FormatNull()
+FormatBool::FormatBool(const bool b)
 {
-    strncpy(buffer_, NULL_STRING, sizeof(NULL_STRING));
-}
-
-
-FormatNull::FormatNull(const std::nullptr_t nullp)
-{
-    strncpy(buffer_, NULL_STRING, sizeof(NULL_STRING));
+    if (b) {
+        strncpy(buffer_, TRUE_STRING, sizeof(TRUE_STRING));
+        size_ = 4;
+    } else {
+        strncpy(buffer_, FALSE_STRING, sizeof(FALSE_STRING));
+        size_ = 5;
+    }
 }
 
 
 /** \brief Size of current buffer.
  */
-size_t FormatNull::size() const
+size_t FormatBool::size() const
 {
-    return 4;
+    return size_;
 }
 
 
 /** \brief Alias for `size()`.
  */
-size_t FormatNull::length() const
+size_t FormatBool::length() const
 {
     return size();
 }
@@ -54,7 +55,7 @@ size_t FormatNull::length() const
  *
  *  Compliant with C++11's `data()`, which adds a null-terminator.
  */
-const char * FormatNull::data() const
+const char * FormatBool::data() const
 {
     return c_str();
 }
@@ -62,7 +63,7 @@ const char * FormatNull::data() const
 
 /** \brief Return null-terminated buffer.
  */
-const char * FormatNull::c_str() const
+const char * FormatBool::c_str() const
 {
     return buffer_;
 }
@@ -70,9 +71,10 @@ const char * FormatNull::c_str() const
 
 /** \brief Conversion to std::string.
  */
-FormatNull::operator std::string() const
+FormatBool::operator std::string() const
 {
     return std::string(data(), size());
 }
+
 
 }   /* lexi */

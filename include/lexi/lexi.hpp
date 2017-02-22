@@ -7,7 +7,12 @@
 
 #pragma once
 
+#include "bool.hpp"
+#include "char.hpp"
 #include "int.hpp"
+#include "enum.hpp"
+#include "float.hpp"
+#include "null.hpp"
 #include "detail/type.hpp"
 
 
@@ -17,10 +22,54 @@ namespace lexi
 // -------
 
 
-// TODO: sfinae for type detection for formatting
-template <typename T>
+/** \brief Type detection and formatting overloads.
+ */
 struct Format
-{};
+{
+    template <typename T>
+    enable_if_t<is_null_pointer_v<T>, std::string>
+    operator()(const T t)
+    {
+        return std::string(FormatNull(t));
+    }
+
+    template <typename T>
+    enable_if_t<is_enum_v<T>, std::string>
+    operator()(const T t)
+    {
+        return std::string(FormatEnum(t));
+    }
+
+    template <typename T>
+    enable_if_t<is_bool_v<T>, std::string>
+    operator()(const T t)
+    {
+        return std::string(FormatBool(t));
+    }
+
+    template <typename T>
+    enable_if_t<is_character_v<T>, std::string>
+    operator()(const T t)
+    {
+        return std::string(FormatChar(t));
+    }
+
+    template <typename T>
+    enable_if_t<is_integer_v<T>, std::string>
+    operator()(const T t)
+    {
+        return std::string(FormatInt(t));
+    }
+
+    template <typename T>
+    enable_if_t<is_float_v<T>, std::string>
+    operator()(const T t)
+    {
+        return std::string(FormatFloat(t));
+    }
+
+    // TODO: need to check if string...
+};
 
 
 // TODO: sfinae for type detection for extraction
@@ -37,7 +86,7 @@ struct Extract
  */
 template <
     typename T,
-    typename = detail::enable_if_t<!detail::is_same_v<T, std::string>, T>
+    typename = enable_if_t<!is_same_v<T, std::string>, T>
 >
 T lexi(const std::string &string)
 {
@@ -50,17 +99,16 @@ T lexi(const std::string &string)
  */
 template <
     typename T,
-    typename = detail::enable_if_t<!detail::is_same_v<T, std::string>, T>
+    typename = enable_if_t<!is_same_v<T, std::string>, T>
 >
 std::string lexi(const T &t)
 {
-    // TODO: implement
-    return std::string();
+    return Format()(t);
 }
 
-
-/** \brief Overload returning reference for existing string types.
- */
-const std::string & lexi(const std::string &string);
+//
+///** \brief Overload returning reference for existing string types.
+// */
+//const std::string & lexi(const std::string &string);
 
 }   /* lexi */

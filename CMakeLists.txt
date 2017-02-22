@@ -33,10 +33,14 @@ endif()
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
 
 set(SOURCE_FILES
+    src/detail/bigint.cpp
     src/detail/diyfp.cpp
     src/detail/dtoa.cpp
     src/detail/ieee754.cpp
     src/detail/itoa.cpp
+    src/detail/pow.cpp
+    src/detail/strtod.cpp
+    src/bool.cpp
     src/char.cpp
     src/null.cpp
     src/float.cpp
@@ -64,8 +68,12 @@ endif()
 
 set(TEST_FILES
     test/main.cpp
+    test/bool.cpp
+    test/enum.cpp
     test/float.cpp
     test/int.cpp
+    test/lexi.cpp
+    test/null.cpp
 )
 
 if(BUILD_TESTS)

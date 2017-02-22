@@ -32,7 +32,7 @@ FormatChar::FormatChar(const unsigned char c)
  */
 size_t FormatChar::size() const
 {
-    return 2;
+    return 1;
 }
 
 
