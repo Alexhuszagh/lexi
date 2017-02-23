@@ -92,7 +92,11 @@ struct is_std_string: std::is_base_of<std::string, T>
 {};
 
 template <typename T>
-struct is_cstr: std::is_same<char*, typename std::remove_cv<typename std::decay<T>::type>::type>
+struct is_string_literal: std::is_same<char*, typename std::remove_cv<typename std::decay<T>::type>::type>
+{};
+
+template <typename T>
+struct is_cstr: std::is_same<const char*, typename std::remove_cv<typename std::decay<T>::type>::type>
 {};
 
 template <typename T>
@@ -148,10 +152,13 @@ template <typename T>
 constexpr bool is_std_string_v = detail::is_std_string<T>::value;
 
 template <typename T>
+constexpr bool is_string_literal_v = detail::is_string_literal<T>::value;
+
+template <typename T>
 constexpr bool is_cstr_v = detail::is_cstr<T>::value;
 
 template <typename T>
-constexpr bool is_string_v = is_std_string_v<T> || is_cstr_v<T>;
+constexpr bool is_string_v = is_std_string_v<T> || is_cstr_v<T> || is_string_literal_v<T>;
 
 template <typename T>
 constexpr bool is_fpos_v = detail::is_fpos<T>::value;
