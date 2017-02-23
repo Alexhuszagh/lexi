@@ -177,6 +177,14 @@ std::string lexi(const T &t)
 
 /** \brief Overload for existing string types.
  */
+inline std::string lexi(const char *string)
+{
+    return string;
+}
+
+
+/** \brief Overload for existing string types.
+ */
 inline std::string lexi(const std::string &string)
 {
     return string;
@@ -192,6 +200,14 @@ template <
 std::string string(const T &t)
 {
     return Format()(t).string();
+}
+
+
+/** \brief Overload for existing string types.
+ */
+inline std::string string(const char *string)
+{
+    return string;
 }
 
 
@@ -217,6 +233,14 @@ std::string escape(const T &t)
 
 /** \brief Escape existing string.
  */
+inline std::string escape(const char *string)
+{
+    return detail::escape(string);
+}
+
+
+/** \brief Escape existing string.
+ */
 inline std::string escape(const std::string &string)
 {
     return detail::escape(string);
@@ -232,6 +256,14 @@ template <
 std::string jsonify(const T &t)
 {
     return Format()(t).jsonify();
+}
+
+
+/** \brief Format string to JSON-literal.
+ */
+inline std::string jsonify(const char *string)
+{
+    return "\"" + detail::jsonify(string) + "\"";
 }
 
 
