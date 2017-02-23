@@ -177,13 +177,29 @@ std::string lexi(const T &t)
 
 /** \brief Overload for existing string types.
  */
+inline std::string lexi(const std::string &string)
+{
+    return string;
+}
+
+
+/** \brief Format value to string.
+ */
 template <
     typename T,
-    enable_if_t<is_string_v<T>, T>* = nullptr
+    enable_if_t<!is_string_v<T>, T>* = nullptr
 >
-std::string lexi(const T &t)
+std::string string(const T &t)
 {
-    return t;
+    return Format()(t).string();
+}
+
+
+/** \brief Overload for existing string types.
+ */
+inline std::string string(const std::string &string)
+{
+    return string;
 }
 
 
@@ -201,13 +217,9 @@ std::string escape(const T &t)
 
 /** \brief Escape existing string.
  */
-template <
-    typename T,
-    enable_if_t<is_string_v<T>, T>* = nullptr
->
-std::string escape(const T &t)
+inline std::string escape(const std::string &string)
 {
-    return detail::escape(t);
+    return detail::escape(string);
 }
 
 
@@ -225,13 +237,9 @@ std::string jsonify(const T &t)
 
 /** \brief Format string to JSON-literal.
  */
-template <
-    typename T,
-    enable_if_t<is_string_v<T>, T>* = nullptr
->
-std::string jsonify(const T &t)
+inline std::string jsonify(const std::string &string)
 {
-    return "\"" + detail::jsonify(t) + "\"";
+    return "\"" + detail::jsonify(string) + "\"";
 }
 
 }   /* lexi */
