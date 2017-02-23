@@ -67,7 +67,7 @@ std::string jsonify(const std::string &src)
                 break;
             case '\n':
                 dst.push_back('\\');
-                dst.push_back('f');
+                dst.push_back('n');
                 break;
             case '\r':
                 dst.push_back('\\');
