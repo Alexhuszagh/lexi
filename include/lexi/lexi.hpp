@@ -179,11 +179,12 @@ std::string lexi(const T &t)
  */
 template <
     typename T,
-    enable_if_t<is_cstr<T>, T>* = nullptr
+    enable_if_t<is_cstr_v<T>, T>* = nullptr
 >
 inline std::string lexi(T string)
 {
-    return string;
+    //return string;
+    return "";
 }
 
 
@@ -191,7 +192,7 @@ inline std::string lexi(T string)
  */
 template <
     typename T,
-    enable_if_t<is_std_string<T>, T>* = nullptr
+    enable_if_t<is_std_string_v<T>, T>* = nullptr
 >
 inline std::string lexi(const T &string)
 {
@@ -215,11 +216,12 @@ std::string string(const T &t)
  */
 template <
     typename T,
-    enable_if_t<is_cstr<T>, T>* = nullptr
+    enable_if_t<is_cstr_v<T>, T>* = nullptr
 >
 inline std::string string(T string)
 {
-    return string;
+    //return string;
+    return "";
 }
 
 
@@ -227,7 +229,7 @@ inline std::string string(T string)
  */
 template <
     typename T,
-    enable_if_t<is_std_string<T>, T>* = nullptr
+    enable_if_t<is_std_string_v<T>, T>* = nullptr
 >
 inline std::string string(const T &string)
 {
@@ -251,11 +253,12 @@ std::string escape(const T &t)
  */
 template <
     typename T,
-    enable_if_t<is_cstr<T>, T>* = nullptr
+    enable_if_t<is_cstr_v<T>, T>* = nullptr
 >
 inline std::string escape(T string)
 {
-    return detail::escape(string);
+    //return detail::escape(string);
+    return "";
 }
 
 
@@ -263,7 +266,7 @@ inline std::string escape(T string)
  */
 template <
     typename T,
-    enable_if_t<is_std_string<T>, T>* = nullptr
+    enable_if_t<is_std_string_v<T>, T>* = nullptr
 >
 inline std::string escape(const T &string)
 {
@@ -287,11 +290,12 @@ std::string jsonify(const T &t)
  */
 template <
     typename T,
-    enable_if_t<is_cstr<T>, T>* = nullptr
+    enable_if_t<is_cstr_v<T>, T>* = nullptr
 >
 inline std::string jsonify(T string)
 {
-    return "\"" + detail::jsonify(string) + "\"";
+    //return "\"" + detail::jsonify(string) + "\"";
+    return "";
 }
 
 
@@ -299,7 +303,7 @@ inline std::string jsonify(T string)
  */
 template <
     typename T,
-    enable_if_t<is_std_string<T>, T>* = nullptr
+    enable_if_t<is_std_string_v<T>, T>* = nullptr
 >
 inline std::string jsonify(const T &string)
 {
