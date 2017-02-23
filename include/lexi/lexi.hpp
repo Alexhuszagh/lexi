@@ -67,6 +67,13 @@ struct Format
     {
         return std::string(FormatEnum(t));
     }
+
+    template <typename T>
+    enable_if_t<is_fpos_v<T>, std::string>
+    operator()(const T t)
+    {
+        return std::string(FormatInt(std::streamoff(t)));
+    }
 };
 
 
@@ -116,6 +123,13 @@ struct Extract
     operator()(const std::string &string)
     {
         return T(ExtractEnum(string));
+    }
+
+    template <typename U = T>
+    enable_if_t<is_fpos_v<U>, T>
+    operator()(const std::string &string)
+    {
+        return T(std::streamoff(ExtractInt(string)));
     }
 };
 

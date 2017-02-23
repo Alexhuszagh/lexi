@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <ios>
 #include <limits>
 #include <type_traits>
 
@@ -94,6 +95,14 @@ template <typename T>
 struct is_cstr: std::is_same<char*, typename std::remove_cv<typename std::decay<T>::type>::type>
 {};
 
+template <typename T>
+struct is_fpos: std::false_type
+{};
+
+template <typename T>
+struct is_fpos<std::fpos<T>>: std::true_type
+{};
+
 }   /* detail */
 
 // TYPES
@@ -143,5 +152,8 @@ constexpr bool is_cstr_v = detail::is_cstr<T>::value;
 
 template <typename T>
 constexpr bool is_string_v = is_std_string_v<T> || is_cstr_v<T>;
+
+template <typename T>
+constexpr bool is_fpos_v = detail::is_fpos<T>::value;
 
 }   /* lexi */
