@@ -31,11 +31,31 @@ TEST(Lexi, Format)
     EXPECT_EQ(lexi::lexi('\0'), std::string("\0", 1));
     EXPECT_EQ(lexi::lexi(1), "1");
     EXPECT_EQ(lexi::lexi(1.0), "1.0");
-    // TODO: need to check if std::string or convertible
+    EXPECT_EQ(lexi::lexi("1.0"), "1.0");
+    EXPECT_EQ(lexi::lexi(std::string("1.0")), "1.0");
 }
 
 
 TEST(Lexi, Extract)
 {
-    // TODO: implement...
+    EXPECT_EQ(lexi::lexi<std::nullptr_t>("null"), nullptr);
+    ASSERT_THROW(lexi::lexi<std::nullptr_t>("false"), std::runtime_error);
+    EXPECT_EQ(lexi::lexi<bool>("true"), true);
+    EXPECT_EQ(lexi::lexi<bool>("false"), false);
+    ASSERT_THROW(lexi::lexi<bool>("null"), std::runtime_error);
+    EXPECT_EQ(lexi::lexi<char>("f"), 102);
+    EXPECT_EQ(lexi::lexi<unsigned char>("f"), 102);
+    ASSERT_THROW(lexi::lexi<char>(""), std::runtime_error);
+    ASSERT_THROW(lexi::lexi<unsigned char>(""), std::runtime_error);
+    EXPECT_EQ(lexi::lexi<short>("-1"), -1);
+    EXPECT_EQ(lexi::lexi<int>("-1"), -1);
+    EXPECT_EQ(lexi::lexi<long>("-1"), -1);
+    EXPECT_EQ(lexi::lexi<long long>("-1"), -1);
+    EXPECT_EQ(lexi::lexi<unsigned short>("5"), 5);
+    EXPECT_EQ(lexi::lexi<unsigned int>("5"), 5);
+    EXPECT_EQ(lexi::lexi<unsigned long>("5"), 5);
+    EXPECT_EQ(lexi::lexi<unsigned long long>("5"), 5);
+    EXPECT_EQ(lexi::lexi<Enumerated>("0"), Enumerated::MEMBER);
+    EXPECT_EQ(lexi::lexi("1.0"), "1.0");
+    EXPECT_EQ(lexi::lexi(std::string("1.0")), "1.0");
 }

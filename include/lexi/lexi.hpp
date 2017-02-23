@@ -22,7 +22,7 @@ namespace lexi
 // -------
 
 
-/** \brief Type detection and formatting overloads.
+/** \brief Type detection for formatting overloads.
  */
 struct Format
 {
@@ -31,13 +31,6 @@ struct Format
     operator()(const T t)
     {
         return std::string(FormatNull(t));
-    }
-
-    template <typename T>
-    enable_if_t<is_enum_v<T>, std::string>
-    operator()(const T t)
-    {
-        return std::string(FormatEnum(t));
     }
 
     template <typename T>
@@ -68,14 +61,63 @@ struct Format
         return std::string(FormatFloat(t));
     }
 
-    // TODO: need to check if string...
+    template <typename T>
+    enable_if_t<is_enum_v<T>, std::string>
+    operator()(const T t)
+    {
+        return std::string(FormatEnum(t));
+    }
 };
 
 
-// TODO: sfinae for type detection for extraction
+/** \brief Type detection for extraction overloads.
+ */
 template <typename T>
 struct Extract
-{};
+{
+    template <typename U = T>
+    enable_if_t<is_null_pointer_v<U>, T>
+    operator()(const std::string &string)
+    {
+        return T(ExtractNull(string));
+    }
+
+    template <typename U = T>
+    enable_if_t<is_bool_v<U>, T>
+    operator()(const std::string &string)
+    {
+        return T(ExtractBool(string));
+    }
+
+    template <typename U = T>
+    enable_if_t<is_character_v<U>, T>
+    operator()(const std::string &string)
+    {
+        return T(ExtractChar(string));
+    }
+
+    template <typename U = T>
+    enable_if_t<is_integer_v<U>, T>
+    operator()(const std::string &string)
+    {
+        return T(ExtractInt(string));
+    }
+
+
+    template <typename U = T>
+    enable_if_t<is_float_v<U>, T>
+    operator()(const std::string &string)
+    {
+        return T(ExtractFloat(string));
+    }
+
+    template <typename U = T>
+    enable_if_t<is_enum_v<U>, T>
+    operator()(const std::string &string)
+    {
+        return T(ExtractEnum(string));
+    }
+};
 
 
 // FUNCTIONS
@@ -86,12 +128,23 @@ struct Extract
  */
 template <
     typename T,
-    typename = enable_if_t<!is_same_v<T, std::string>, T>
+    typename = enable_if_t<!is_string_v<T>, T>
 >
 T lexi(const std::string &string)
 {
-    // TODO: implement
-    return T();
+    return Extract<T>()(string);
+}
+
+
+/** \brief Extract value from string literal.
+ */
+template <
+    typename T,
+    typename = enable_if_t<!is_string_v<T>, T>
+>
+T lexi(const char *string)
+{
+    return Extract<T>()(string);
 }
 
 
@@ -99,16 +152,23 @@ T lexi(const std::string &string)
  */
 template <
     typename T,
-    typename = enable_if_t<!is_same_v<T, std::string>, T>
+    enable_if_t<!is_string_v<T>, T>* = nullptr
 >
 std::string lexi(const T &t)
 {
     return Format()(t);
 }
 
-//
-///** \brief Overload returning reference for existing string types.
-// */
-//const std::string & lexi(const std::string &string);
+
+/** \brief Overload returning reference for existing string types.
+ */
+template <
+    typename T,
+    enable_if_t<is_string_v<T>, T>* = nullptr
+>
+std::string lexi(const T &t)
+{
+    return t;
+}
 
 }   /* lexi */

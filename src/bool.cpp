@@ -6,6 +6,7 @@
  */
 
 #include "lexi/bool.hpp"
+#include "lexi/detail/define.hpp"
 
 #include <cstring>
 
@@ -15,9 +16,8 @@ namespace lexi
 // CONSTANTS
 // ---------
 
-// Use JS-like notation by default
-static const char TRUE_STRING[5] = "true";
-static const char FALSE_STRING[6] = "false";
+static const char TRUE_STRING[] = LEXI_TRUE;
+static const char FALSE_STRING[] = LEXI_FALSE;
 
 // OBJECTS
 // -------
@@ -76,5 +76,24 @@ FormatBool::operator std::string() const
     return std::string(data(), size());
 }
 
+
+ExtractBool::ExtractBool(const std::string &string)
+{
+    if (string == TRUE_STRING) {
+        data_ = true;
+    } else if (string == FALSE_STRING) {
+        data_ = false;
+    } else {
+        throw std::runtime_error("String is not boolean.");
+    }
+}
+
+
+/** \brief Conversion to boolean.
+ */
+ExtractBool::operator bool() const
+{
+    return data_;
+}
 
 }   /* lexi */

@@ -135,4 +135,91 @@ FormatInt::operator std::string() const
     return std::string(data(), size());
 }
 
+
+ExtractInt::ExtractInt(const std::string &string)
+{
+    // TODO: optimize this.
+    data_ = std::strtoull(string.data(), nullptr, 10);
+}
+
+
+/** \brief Conversion to int8_t.
+ */
+ExtractInt::operator int8_t() const
+{
+    return static_cast<long long>(data_);
+}
+
+
+/** \brief Conversion to uint8_t.
+ */
+ExtractInt::operator uint8_t() const
+{
+    return data_;
+}
+
+
+/** \brief Conversion to short.
+ */
+ExtractInt::operator short() const
+{
+    return static_cast<long long>(data_);
+}
+
+
+/** \brief Conversion to unsigned short.
+ */
+ExtractInt::operator unsigned short() const
+{
+    return data_;
+}
+
+
+/** \brief Conversion to int.
+ */
+ExtractInt::operator int() const
+{
+    return static_cast<long long>(data_);
+}
+
+
+/** \brief Conversion to unsigned int.
+ */
+ExtractInt::operator unsigned int() const
+{
+    return data_;
+}
+
+
+/** \brief Conversion to long.
+ */
+ExtractInt::operator long() const
+{
+    return static_cast<long long>(data_);
+}
+
+
+/** \brief Conversion to unsigned long.
+ */
+ExtractInt::operator unsigned long() const
+{
+    return data_;
+}
+
+
+/** \brief Conversion to long long.
+ */
+ExtractInt::operator long long() const
+{
+    return static_cast<long long>(data_);
+}
+
+
+/** \brief Conversion to unsigned long long.
+ */
+ExtractInt::operator unsigned long long() const
+{
+    return data_;
+}
+
 }   /* lexi */

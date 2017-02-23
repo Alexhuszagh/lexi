@@ -86,6 +86,14 @@ template <>
 struct is_float<long double>: std::true_type
 {};
 
+template <typename T>
+struct is_std_string: std::is_base_of<std::string, T>
+{};
+
+template <typename T>
+struct is_cstr: std::is_same<char*, typename std::remove_cv<typename std::decay<T>::type>::type>
+{};
+
 }   /* detail */
 
 // TYPES
@@ -126,5 +134,14 @@ constexpr bool is_integer_v = detail::is_integer<T>::value;
 
 template <typename T>
 constexpr bool is_float_v = detail::is_float<T>::value;
+
+template <typename T>
+constexpr bool is_std_string_v = detail::is_std_string<T>::value;
+
+template <typename T>
+constexpr bool is_cstr_v = detail::is_cstr<T>::value;
+
+template <typename T>
+constexpr bool is_string_v = is_std_string_v<T> || is_cstr_v<T>;
 
 }   /* lexi */

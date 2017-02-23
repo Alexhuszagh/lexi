@@ -6,6 +6,7 @@
  */
 
 #include "lexi/char.hpp"
+#include "lexi/detail/define.hpp"
 
 
 namespace lexi
@@ -69,5 +70,27 @@ FormatChar::operator std::string() const
     return std::string(data(), size());
 }
 
+
+ExtractChar::ExtractChar(const std::string &string)
+{
+    LEXI_ASSERT(!string.empty(), "Cannot extract character from empty string.");
+    c = string.front();
+}
+
+
+/** \brief Conversion to char.
+ */
+ExtractChar::operator char() const
+{
+    return c;
+}
+
+
+/** \brief Conversion to char.
+ */
+ExtractChar::operator unsigned char() const
+{
+    return static_cast<unsigned char>(c);
+}
 
 }   /* lexi */

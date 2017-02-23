@@ -6,6 +6,7 @@
  */
 
 #include "lexi/float.hpp"
+#include "lexi/detail/define.hpp"
 #include "lexi/detail/dtoa.hpp"
 #include "lexi/detail/ieee754.hpp"
 
@@ -17,10 +18,9 @@ namespace lexi
 // CONSTANTS
 // ---------
 
-// Use JS-like notation by default
-static const char NAN_STRING[4] = "NaN";
-static const char INFINITY_STRING[9] = "Infinity";
-static const char NEGATIVE_INFINITY_STRING[10] = "-Infinity";
+static const char NAN_STRING[] = LEXI_NAN;
+static const char INFINITY_STRING[] = LEXI_INFINITY;
+static const char NEGATIVE_INFINITY_STRING[] = LEXI_NEGATIVE_INFINITY;
 
 // OBJECTS
 // -------
@@ -107,6 +107,37 @@ const char * FormatFloat::c_str() const
 FormatFloat::operator std::string() const
 {
     return std::string(data(), size());
+}
+
+
+ExtractFloat::ExtractFloat(const std::string &string)
+{
+    // TODO: optimize this.
+    data_ = std::strtold(string.data(), nullptr);
+}
+
+
+/** \brief Conversion to float.
+ */
+ExtractFloat::operator float() const
+{
+    return data_;
+}
+
+
+/** \brief Conversion to double.
+ */
+ExtractFloat::operator double() const
+{
+    return data_;
+}
+
+
+/** \brief Conversion to long double.
+ */
+ExtractFloat::operator long double() const
+{
+    return data_;
 }
 
 }   /* lexi */

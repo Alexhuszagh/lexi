@@ -38,18 +38,18 @@ public:
 };
 
 
-///** \brief Generic boolean extractor.
-// */
-//class ExtractBool
-//{
-//protected:
-//    bool data_;
-//
-//public:
-//    ExtractBool(const std::string &string);
-//
-//    // CONVERSIONS
-//    explicit operator bool() const;
-//};
+/** \brief Generic boolean extractor.
+ */
+class ExtractBool
+{
+protected:
+    bool data_;
+
+public:
+    ExtractBool(const std::string &string);
+
+    // CONVERSIONS
+    explicit operator bool() const;
+};
 
 }   /* lexi */

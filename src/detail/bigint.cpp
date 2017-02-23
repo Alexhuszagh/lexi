@@ -132,7 +132,7 @@ void BigInteger::add(const char *first,
  */
 void BigInteger::push_back(uint64_t digit)
 {
-    LEXI_ASSERT(count_ < capacity);
+    LEXI_ASSERT(count_ < capacity, "BigInteger::push_back(), count_ >= capacity.");
     digits_[count_++] = digit;
 }
 
@@ -144,7 +144,7 @@ uint64_t BigInteger::parse(const char *first,
 {
     uint64_t r = 0;
     for (const char *p = first; p != last; ++p) {
-        LEXI_ASSERT(*p >= '0' && *p <= '9');
+        LEXI_ASSERT(*p >= '0' && *p <= '9', "Character is not from 0-9.");
         r = r * 10u + static_cast<unsigned>(*p - '0');
     }
     return r;
@@ -223,7 +223,7 @@ size_t BigInteger::count() const
  */
 uint64_t BigInteger::digit(size_t index) const
 {
-    LEXI_ASSERT(index < count_);
+    LEXI_ASSERT(index < count_, "BigInteger::digit(), index is out of bounds.");
     return digits_[index];
 }
 
@@ -328,7 +328,7 @@ BigInteger & BigInteger::operator<<=(size_t shift)
 
     size_t offset = shift / INT64_BYTE;
     size_t interShift = shift % INT64_BYTE;
-    LEXI_ASSERT(count_ + offset <= capacity);
+    LEXI_ASSERT(count_ + offset <= capacity, "BigInteger::operator<<= would exceeds bounds.");
 
     if (interShift == 0) {
         memmove(&digits_[count_ - 1 + offset], &digits_[count_ - 1], count_ * sizeof(uint64_t));
@@ -394,7 +394,7 @@ bool BigInteger::difference(const BigInteger &other,
     BigInteger *out) const
 {
     int cmp = compare(other);
-    LEXI_ASSERT(cmp != 0);
+    LEXI_ASSERT(cmp != 0, "Cannot calculate difference with identical integers.");
 
     const BigInteger *a, *b;  // Makes a > b
     bool ret;

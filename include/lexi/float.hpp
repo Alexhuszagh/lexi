@@ -48,7 +48,15 @@ public:
 class ExtractFloat
 {
 protected:
+    long double data_;
 
+public:
+    ExtractFloat(const std::string &string);
+
+    // CONVERSIONS
+    explicit operator float() const;
+    explicit operator double() const;
+    explicit operator long double() const;
 };
 
 }   /* lexi */

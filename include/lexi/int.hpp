@@ -53,18 +53,22 @@ public:
 class ExtractInt
 {
 protected:
-    // TODO:
+    unsigned long long data_;
 
 public:
+    ExtractInt(const std::string &string);
+
     // CONVERSIONS
-    //explicit operator short() const;
-    //explicit operator unsigned short() const;
-    //explicit operator int() const;
-    //explicit operator unsigned int() const;
-    //explicit operator long() const;
-    //explicit operator unsigned long() const;
-    //explicit operator long long() const;
-    //explicit operator unsigned long long() const;
+    explicit operator int8_t() const;
+    explicit operator uint8_t() const;
+    explicit operator short() const;
+    explicit operator unsigned short() const;
+    explicit operator int() const;
+    explicit operator unsigned int() const;
+    explicit operator long() const;
+    explicit operator unsigned long() const;
+    explicit operator long long() const;
+    explicit operator unsigned long long() const;
 };
 
 }   /* lexi */

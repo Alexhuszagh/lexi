@@ -38,4 +38,14 @@ public:
 };
 
 
+/** \brief Generic null extractor.
+ */
+struct ExtractNull
+{
+    ExtractNull(const std::string &string);
+
+    // CONVERSIONS
+    explicit operator std::nullptr_t() const;
+};
+
 }   /* lexi */

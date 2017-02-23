@@ -37,4 +37,21 @@ public:
     explicit operator std::string() const;
 };
 
+
+/** \brief Generic character extractor.
+ */
+class ExtractChar
+{
+protected:
+    char c;
+
+public:
+    ExtractChar(const std::string &string);
+
+    // CONVERSIONS
+    explicit operator char() const;
+    explicit operator unsigned char() const;
+};
+
+
 }   /* lexi */

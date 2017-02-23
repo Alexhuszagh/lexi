@@ -6,6 +6,7 @@
  */
 
 #include "lexi/null.hpp"
+#include "lexi/detail/define.hpp"
 
 #include <cstring>
 
@@ -15,8 +16,7 @@ namespace lexi
 // CONSTANTS
 // ---------
 
-// Use JS-like notation by default
-static const char NULL_STRING[5] = "null";
+static const char NULL_STRING[] = LEXI_NULL;
 
 // OBJECTS
 // -------
@@ -73,6 +73,20 @@ const char * FormatNull::c_str() const
 FormatNull::operator std::string() const
 {
     return std::string(data(), size());
+}
+
+
+ExtractNull::ExtractNull(const std::string &string)
+{
+    LEXI_ASSERT(string == NULL_STRING, "String is not null.");
+}
+
+
+/** \brief Conversion to nullptr.
+ */
+ExtractNull::operator std::nullptr_t() const
+{
+    return nullptr;
 }
 
 }   /* lexi */

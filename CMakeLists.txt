@@ -45,7 +45,6 @@ set(SOURCE_FILES
     src/null.cpp
     src/float.cpp
     src/int.cpp
-    src/lexi.cpp
 )
 
 if(BUILD_STATIC)

@@ -26,6 +26,17 @@ struct FormatEnum: FormatInt
 };
 
 
+/** \brief Generic enum extractor.
+ */
+struct ExtractEnum: protected ExtractInt
+{
+    using ExtractInt::ExtractInt;
+
+    template <typename Enum>
+    explicit operator Enum() const;
+};
+
+
 // IMPLEMENTATION
 // --------------
 
@@ -35,5 +46,13 @@ FormatEnum::FormatEnum(const Enum value):
     FormatInt(static_cast<underlying_type_t<Enum>>(value))
 {}
 
+
+/** \brief Convert to enum.
+ */
+template <typename Enum>
+ExtractEnum::operator Enum() const
+{
+    return static_cast<Enum>(static_cast<underlying_type_t<Enum>>(data_));
+}
 
 }   /* lexi */
