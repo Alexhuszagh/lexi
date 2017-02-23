@@ -177,7 +177,11 @@ std::string lexi(const T &t)
 
 /** \brief Overload for existing string types.
  */
-inline std::string lexi(const char *string)
+template <
+    typename T,
+    enable_if_t<is_cstr<T>, T>* = nullptr
+>
+inline std::string lexi(T string)
 {
     return string;
 }
@@ -185,7 +189,11 @@ inline std::string lexi(const char *string)
 
 /** \brief Overload for existing string types.
  */
-inline std::string lexi(const std::string &string)
+template <
+    typename T,
+    enable_if_t<is_std_string<T>, T>* = nullptr
+>
+inline std::string lexi(const T &string)
 {
     return string;
 }
@@ -205,7 +213,11 @@ std::string string(const T &t)
 
 /** \brief Overload for existing string types.
  */
-inline std::string string(const char *string)
+template <
+    typename T,
+    enable_if_t<is_cstr<T>, T>* = nullptr
+>
+inline std::string string(T string)
 {
     return string;
 }
@@ -213,7 +225,11 @@ inline std::string string(const char *string)
 
 /** \brief Overload for existing string types.
  */
-inline std::string string(const std::string &string)
+template <
+    typename T,
+    enable_if_t<is_std_string<T>, T>* = nullptr
+>
+inline std::string string(const T &string)
 {
     return string;
 }
@@ -233,7 +249,11 @@ std::string escape(const T &t)
 
 /** \brief Escape existing string.
  */
-inline std::string escape(const char *string)
+template <
+    typename T,
+    enable_if_t<is_cstr<T>, T>* = nullptr
+>
+inline std::string escape(T string)
 {
     return detail::escape(string);
 }
@@ -241,7 +261,11 @@ inline std::string escape(const char *string)
 
 /** \brief Escape existing string.
  */
-inline std::string escape(const std::string &string)
+template <
+    typename T,
+    enable_if_t<is_std_string<T>, T>* = nullptr
+>
+inline std::string escape(const T &string)
 {
     return detail::escape(string);
 }
@@ -261,7 +285,11 @@ std::string jsonify(const T &t)
 
 /** \brief Format string to JSON-literal.
  */
-inline std::string jsonify(const char *string)
+template <
+    typename T,
+    enable_if_t<is_cstr<T>, T>* = nullptr
+>
+inline std::string jsonify(T string)
 {
     return "\"" + detail::jsonify(string) + "\"";
 }
@@ -269,7 +297,11 @@ inline std::string jsonify(const char *string)
 
 /** \brief Format string to JSON-literal.
  */
-inline std::string jsonify(const std::string &string)
+template <
+    typename T,
+    enable_if_t<is_std_string<T>, T>* = nullptr
+>
+inline std::string jsonify(const T &string)
 {
     return "\"" + detail::jsonify(string) + "\"";
 }
