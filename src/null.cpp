@@ -70,9 +70,33 @@ const char * FormatNull::c_str() const
 
 /** \brief Conversion to std::string.
  */
-FormatNull::operator std::string() const
+std::string FormatNull::string() const
 {
     return std::string(data(), size());
+}
+
+
+/** \brief Escape characters and get string.
+ */
+std::string FormatNull::escape() const
+{
+    return string();
+}
+
+
+/** \brief Convert input to JSON-literal.
+ */
+std::string FormatNull::jsonify() const
+{
+    return string();
+}
+
+
+/** \brief Conversion to std::string.
+ */
+FormatNull::operator std::string() const
+{
+    return string();
 }
 
 

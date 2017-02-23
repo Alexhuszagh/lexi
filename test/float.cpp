@@ -19,18 +19,26 @@
 TEST(FormatFloat, Iee754)
 {
     auto TEST_FLOAT = [](const float value, const std::string &expected) {
-        EXPECT_EQ(std::string(lexi::FormatFloat(value)), expected);
+        EXPECT_EQ(lexi::FormatFloat(value).string(), expected);
     };
     auto TEST_DOUBLE = [](const double value, const std::string &expected) {
-        EXPECT_EQ(std::string(lexi::FormatFloat(value)), expected);
+        EXPECT_EQ(lexi::FormatFloat(value).string(), expected);
     };
     auto TEST_LONGDOUBLE = [](const long double value, const std::string &expected) {
-        EXPECT_EQ(std::string(lexi::FormatFloat(value)), expected);
+        EXPECT_EQ(lexi::FormatFloat(value).string(), expected);
+    };
+    auto TEST_ESCAPE = [](const long double value, const std::string &expected) {
+        EXPECT_EQ(lexi::FormatFloat(value).escape(), expected);
+    };
+    auto TEST_JSONIFY = [](const long double value, const std::string &expected) {
+        EXPECT_EQ(lexi::FormatFloat(value).jsonify(), expected);
     };
 
     TEST_FLOAT(0, "0.0");
     TEST_DOUBLE(0, "0.0");
     TEST_LONGDOUBLE(0, "0.0");
+    TEST_ESCAPE(0, "0.0");
+    TEST_JSONIFY(0, "0.0");
 
     TEST_DOUBLE(1.0, "1.0");
     TEST_DOUBLE(-1.0, "-1.0");

@@ -130,9 +130,33 @@ const char * FormatInt::c_str() const
 
 /** \brief Conversion to std::string.
  */
-FormatInt::operator std::string() const
+std::string FormatInt::string() const
 {
     return std::string(data(), size());
+}
+
+
+/** \brief Escape characters and get string.
+ */
+std::string FormatInt::escape() const
+{
+    return string();
+}
+
+
+/** \brief Convert input to JSON-literal.
+ */
+std::string FormatInt::jsonify() const
+{
+    return string();
+}
+
+
+/** \brief Conversion to std::string.
+ */
+FormatInt::operator std::string() const
+{
+    return string();
 }
 
 

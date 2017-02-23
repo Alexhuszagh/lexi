@@ -15,12 +15,20 @@
 
 TEST(FormatNull, Format)
 {
-    auto TEST_NULL  = [](std::nullptr_t nullp, const std::string &expected) {
-        EXPECT_EQ(std::string(lexi::FormatNull(nullp)), expected);
+    auto TEST_STRING  = [](std::nullptr_t nullp, const std::string &expected) {
+        EXPECT_EQ(lexi::FormatNull(nullp).string(), expected);
+    };
+    auto TEST_ESCAPED  = [](std::nullptr_t nullp, const std::string &expected) {
+        EXPECT_EQ(lexi::FormatNull(nullp).string(), expected);
+    };
+    auto TEST_JSONIFY  = [](std::nullptr_t nullp, const std::string &expected) {
+        EXPECT_EQ(lexi::FormatNull(nullp).jsonify(), expected);
     };
 
-    TEST_NULL(0, "null");
-    TEST_NULL(NULL, "null");
-    TEST_NULL(nullptr, "null");
-    TEST_NULL(std::nullptr_t(), "null");
+    TEST_STRING(0, "null");
+    TEST_ESCAPED(0, "null");
+    TEST_JSONIFY(0, "null");
+    TEST_STRING(NULL, "null");
+    TEST_STRING(nullptr, "null");
+    TEST_STRING(std::nullptr_t(), "null");
 }

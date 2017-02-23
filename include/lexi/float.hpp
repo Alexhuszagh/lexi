@@ -38,6 +38,10 @@ public:
     const char * data() const;
     const char * c_str() const;
 
+    std::string string() const;
+    std::string escape() const;
+    std::string jsonify() const;
+
     // CONVERSIONS
     explicit operator std::string() const;
 };

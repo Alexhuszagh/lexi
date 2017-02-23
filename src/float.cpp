@@ -104,9 +104,33 @@ const char * FormatFloat::c_str() const
 
 /** \brief Conversion to std::string.
  */
-FormatFloat::operator std::string() const
+std::string FormatFloat::string() const
 {
     return std::string(data(), size());
+}
+
+
+/** \brief Escape characters and get string.
+ */
+std::string FormatFloat::escape() const
+{
+    return string();
+}
+
+
+/** \brief Convert input to JSON-literal.
+ */
+std::string FormatFloat::jsonify() const
+{
+    return string();
+}
+
+
+/** \brief Conversion to std::string.
+ */
+FormatFloat::operator std::string() const
+{
+    return string();
 }
 
 

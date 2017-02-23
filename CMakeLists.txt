@@ -39,6 +39,7 @@ set(SOURCE_FILES
     src/detail/ieee754.cpp
     src/detail/itoa.cpp
     src/detail/pow.cpp
+    src/detail/string.cpp
     src/detail/strtod.cpp
     src/bool.cpp
     src/char.cpp
@@ -68,6 +69,7 @@ endif()
 set(TEST_FILES
     test/main.cpp
     test/bool.cpp
+    test/char.cpp
     test/enum.cpp
     test/float.cpp
     test/int.cpp

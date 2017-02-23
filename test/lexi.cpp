@@ -33,6 +33,11 @@ TEST(Lexi, Format)
     EXPECT_EQ(lexi::lexi(1.0), "1.0");
     EXPECT_EQ(lexi::lexi("1.0"), "1.0");
     EXPECT_EQ(lexi::lexi(std::string("1.0")), "1.0");
+
+    EXPECT_EQ(lexi::escape('\0'), std::string("\\\0", 2));
+    EXPECT_EQ(lexi::jsonify('\0'), "\"\\u0000\"");
+    EXPECT_EQ(lexi::jsonify('\b'), "\"\\b\"");
+    EXPECT_EQ(lexi::jsonify("\b"), "\"\\b\"");
 }
 
 

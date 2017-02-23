@@ -71,9 +71,33 @@ const char * FormatBool::c_str() const
 
 /** \brief Conversion to std::string.
  */
-FormatBool::operator std::string() const
+std::string FormatBool::string() const
 {
     return std::string(data(), size());
+}
+
+
+/** \brief Escape characters and get string.
+ */
+std::string FormatBool::escape() const
+{
+    return string();
+}
+
+
+/** \brief Convert input to JSON-literal.
+ */
+std::string FormatBool::jsonify() const
+{
+    return string();
+}
+
+
+/** \brief Conversion to std::string.
+ */
+FormatBool::operator std::string() const
+{
+    return string();
 }
 
 

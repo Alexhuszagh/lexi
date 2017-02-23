@@ -16,22 +16,28 @@
 TEST(FormatInt, Unsigned)
 {
     auto TEST_USHORT = [](const unsigned short value, const std::string &expected) {
-        EXPECT_EQ(std::string(lexi::FormatInt(value)), expected);
+        EXPECT_EQ(lexi::FormatInt(value).escape(), expected);
     };
     auto TEST_UINT = [](const unsigned int value, const std::string &expected) {
-        EXPECT_EQ(std::string(lexi::FormatInt(value)), expected);
+        EXPECT_EQ(lexi::FormatInt(value).escape(), expected);
     };
     auto TEST_ULONG = [](const unsigned long value, const std::string &expected) {
-        EXPECT_EQ(std::string(lexi::FormatInt(value)), expected);
+        EXPECT_EQ(lexi::FormatInt(value).escape(), expected);
     };
     auto TEST_ULONGLONG = [](const unsigned long long value, const std::string &expected) {
-        EXPECT_EQ(std::string(lexi::FormatInt(value)), expected);
+        EXPECT_EQ(lexi::FormatInt(value).escape(), expected);
+    };
+    auto TEST_ESCAPE = [](const unsigned long long value, const std::string &expected) {
+        EXPECT_EQ(lexi::FormatInt(value).escape(), expected);
+    };
+    auto TEST_JSONIFY = [](const unsigned long long value, const std::string &expected) {
+        EXPECT_EQ(lexi::FormatInt(value).jsonify(), expected);
     };
 
     TEST_USHORT(1, "1");
     TEST_UINT(1, "1");
     TEST_ULONG(1, "1");
     TEST_ULONGLONG(1, "1");
-
-    // TODO: need to add on the unittests
+    TEST_ESCAPE(1, "1");
+    TEST_JSONIFY(1, "1");
 }

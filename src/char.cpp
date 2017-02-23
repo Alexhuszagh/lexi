@@ -7,6 +7,7 @@
 
 #include "lexi/char.hpp"
 #include "lexi/detail/define.hpp"
+#include "lexi/detail/string.hpp"
 
 
 namespace lexi
@@ -65,9 +66,33 @@ const char * FormatChar::c_str() const
 
 /** \brief Conversion to std::string.
  */
-FormatChar::operator std::string() const
+std::string FormatChar::string() const
 {
     return std::string(data(), size());
+}
+
+
+/** \brief Escape characters and get string.
+ */
+std::string FormatChar::escape() const
+{
+    return detail::escape(string());
+}
+
+
+/** \brief Convert input to JSON-literal.
+ */
+std::string FormatChar::jsonify() const
+{
+    return "\"" + detail::jsonify(string()) + "\"";
+}
+
+
+/** \brief Conversion to std::string.
+ */
+FormatChar::operator std::string() const
+{
+    return string();
 }
 
 

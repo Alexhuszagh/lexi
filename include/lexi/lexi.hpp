@@ -13,6 +13,7 @@
 #include "enum.hpp"
 #include "float.hpp"
 #include "null.hpp"
+#include "detail/string.hpp"
 #include "detail/type.hpp"
 
 
@@ -27,52 +28,52 @@ namespace lexi
 struct Format
 {
     template <typename T>
-    enable_if_t<is_null_pointer_v<T>, std::string>
+    enable_if_t<is_null_pointer_v<T>, FormatNull>
     operator()(const T t)
     {
-        return std::string(FormatNull(t));
+        return FormatNull(t);
     }
 
     template <typename T>
-    enable_if_t<is_bool_v<T>, std::string>
+    enable_if_t<is_bool_v<T>, FormatBool>
     operator()(const T t)
     {
-        return std::string(FormatBool(t));
+        return FormatBool(t);
     }
 
     template <typename T>
-    enable_if_t<is_character_v<T>, std::string>
+    enable_if_t<is_character_v<T>, FormatChar>
     operator()(const T t)
     {
-        return std::string(FormatChar(t));
+        return FormatChar(t);
     }
 
     template <typename T>
-    enable_if_t<is_integer_v<T>, std::string>
+    enable_if_t<is_integer_v<T>, FormatInt>
     operator()(const T t)
     {
-        return std::string(FormatInt(t));
+        return FormatInt(t);
     }
 
     template <typename T>
-    enable_if_t<is_float_v<T>, std::string>
+    enable_if_t<is_float_v<T>, FormatFloat>
     operator()(const T t)
     {
-        return std::string(FormatFloat(t));
+        return FormatFloat(t);
     }
 
     template <typename T>
-    enable_if_t<is_enum_v<T>, std::string>
+    enable_if_t<is_enum_v<T>, FormatEnum>
     operator()(const T t)
     {
-        return std::string(FormatEnum(t));
+        return FormatEnum(t);
     }
 
     template <typename T>
-    enable_if_t<is_fpos_v<T>, std::string>
+    enable_if_t<is_fpos_v<T>, FormatInt>
     operator()(const T t)
     {
-        return std::string(FormatInt(std::streamoff(t)));
+        return FormatInt(std::streamoff(t));
     }
 };
 
@@ -162,7 +163,7 @@ T lexi(const char *string)
 }
 
 
-/** \brief Format value from string.
+/** \brief Format value to string.
  */
 template <
     typename T,
@@ -170,11 +171,11 @@ template <
 >
 std::string lexi(const T &t)
 {
-    return Format()(t);
+    return Format()(t).string();
 }
 
 
-/** \brief Overload returning reference for existing string types.
+/** \brief Overload for existing string types.
  */
 template <
     typename T,
@@ -183,6 +184,54 @@ template <
 std::string lexi(const T &t)
 {
     return t;
+}
+
+
+/** \brief Format escaped value to string.
+ */
+template <
+    typename T,
+    enable_if_t<!is_string_v<T>, T>* = nullptr
+>
+std::string escape(const T &t)
+{
+    return Format()(t).escape();
+}
+
+
+/** \brief Escape existing string.
+ */
+template <
+    typename T,
+    enable_if_t<is_string_v<T>, T>* = nullptr
+>
+std::string escape(const T &t)
+{
+    return detail::escape(t);
+}
+
+
+/** \brief Format value to JSON-literal.
+ */
+template <
+    typename T,
+    enable_if_t<!is_string_v<T>, T>* = nullptr
+>
+std::string jsonify(const T &t)
+{
+    return Format()(t).jsonify();
+}
+
+
+/** \brief Format string to JSON-literal.
+ */
+template <
+    typename T,
+    enable_if_t<is_string_v<T>, T>* = nullptr
+>
+std::string jsonify(const T &t)
+{
+    return "\"" + detail::jsonify(t) + "\"";
 }
 
 }   /* lexi */
