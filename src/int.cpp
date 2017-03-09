@@ -16,6 +16,22 @@ namespace lexi
 // -------
 
 
+FormatInt::FormatInt(int8_t value)
+{
+    first = buffer_;
+    last = detail::i32toa(value, buffer_);
+    *last = '\0';
+}
+
+
+FormatInt::FormatInt(uint8_t value)
+{
+    first = buffer_;
+    last = detail::u32toa(value, buffer_);
+    *last = '\0';
+}
+
+
 FormatInt::FormatInt(short value)
 {
     first = buffer_;
