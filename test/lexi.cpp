@@ -49,9 +49,9 @@ TEST(Lexi, Extract)
     EXPECT_EQ(lexi::lexi<bool>("false"), false);
     ASSERT_THROW(lexi::lexi<bool>("null"), std::runtime_error);
     EXPECT_EQ(lexi::lexi<char>("f"), 102);
-    EXPECT_EQ(lexi::lexi<unsigned char>("f"), 102);
+    EXPECT_EQ(lexi::lexi<unsigned char>("102"), 102);
     ASSERT_THROW(lexi::lexi<char>(""), std::runtime_error);
-    ASSERT_THROW(lexi::lexi<unsigned char>(""), std::runtime_error);
+    EXPECT_EQ(lexi::lexi<unsigned char>(""), 0);
     EXPECT_EQ(lexi::lexi<short>("-1"), -1);
     EXPECT_EQ(lexi::lexi<int>("-1"), -1);
     EXPECT_EQ(lexi::lexi<long>("-1"), -1);

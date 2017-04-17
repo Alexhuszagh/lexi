@@ -42,7 +42,7 @@ struct Format
     }
 
     template <typename T>
-    enable_if_t<is_character_v<T>, FormatChar>
+    enable_if_t<is_char_v<T>, FormatChar>
     operator()(const T t)
     {
         return FormatChar(t);
@@ -98,7 +98,7 @@ struct Extract
     }
 
     template <typename U = T>
-    enable_if_t<is_character_v<U>, T>
+    enable_if_t<is_char_v<U>, T>
     operator()(const std::string &string)
     {
         return T(ExtractChar(string));

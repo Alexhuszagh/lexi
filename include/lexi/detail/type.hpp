@@ -40,6 +40,14 @@ struct is_integer: std::false_type
 {};
 
 template <>
+struct is_integer<signed char>: std::true_type
+{};
+
+template <>
+struct is_integer<unsigned char>: std::true_type
+{};
+
+template <>
 struct is_integer<short>: std::true_type
 {};
 
