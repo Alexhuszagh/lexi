@@ -13,7 +13,6 @@ Lexi, for lexical, is a fast conversion library to and from lexical forms. Inter
 **Table of Contents**
 
 - [Features](#features)
-- [Testing](#testing)
 - [Portability](#portability)
 - [Acknowledgments](#acknowledgements)
 - [Contributor Guidelines](#contributor-guidelines)
@@ -32,23 +31,18 @@ Simply clone, configure with CMake, and build.
 ```bash
 git clone https://github.com/Alexhuszagh/lexi.git
 git submodule update --init
-cd json/build
+cd lexi/build
 cmake .. -_DBUILD_TESTS=ON      # "-DBUILD_FUZZ=ON" for fuzzing with Clang
-make -j 5                       # "msbuild Lexi.sln" for MSVC
+make -j 5                       # "msbuild lexi.sln" for MSVC
 ```
-
-## Testing
-
-// TODO: need to fuzz
 
 ## Portability
 
-Json++ has been tested with the following compilers and operating systems:
+Lexi is continually built with the following compiler and compiler versions:
 
-- 64-bit Linux with Clang 3.8.2
-- 64-bit Linux with GCC 5.4.0
-- 32/64-bit Windows with MinGW 5.3.0 (MXE, MinGW, and MSYS2) 
-//- 32/64-bit Windows with Visual Studio 14 2015
+- Clang 3.8+
+- GCC 5.3+
+- MinGW 5.3.0 (MXE, MinGW, and MSYS2) 
 
 ## Acknowledgments
 
