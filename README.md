@@ -3,6 +3,12 @@ Lexi
 
 Lexi, for lexical, is a fast conversion library to and from lexical forms. Internally, Lexi uses code from Milo Yip's [dtoa and itoa](https://github.com/miloyip/rapidjson) implementation for double and integer conversions, respectively, and adds type detection as well as other overloads for fast lexical conversions.
 
+[![Build Status](https://travis-ci.org/Alexhuszagh/lexi.svg?branch=master)](https://travis-ci.org/Alexhuszagh/lexi)
+[![Build status](https://ci.appveyor.com/api/projects/status/mds5o52wguleb54b?svg=true)](https://ci.appveyor.com/project/Alexhuszagh/lexi)
+[![Coverity Scan Build Status](https://scan.coverity.com/projects/12987/badge.svg)](https://scan.coverity.com/projects/alexhuszagh-lexi)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/103c3c4c3b1f4508ae34278366cacdaf)](https://www.codacy.com/app/Alexhuszagh/lexi?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Alexhuszagh/lexi&amp;utm_campaign=Badge_Grade)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Alexhuszagh/lexi/blob/master/LICENSE.md)
+
 **Table of Contents**
 
 - [Features](#features)
