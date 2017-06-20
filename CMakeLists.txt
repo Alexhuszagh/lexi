@@ -2,7 +2,8 @@
 #  :license: MIT, see LICENSE.md for more details.
 
 cmake_minimum_required(VERSION 2.8)
-project(Lexi CXX)
+project(lexi CXX)
+enable_testing()
 
 # FLAGS
 # -----
@@ -22,8 +23,10 @@ if(BUILD_STATIC)
     elseif(MINGW)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static")
     elseif(MSVC)
-        set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_RELEASE} /MTd /O0")
-        set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT /Ox")
+        set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd /O0 /Fd${CMAKE_BINARY_DIR}/${PROJECT_NAME}.pdb")
+        set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT /Ox /Zi /Fd${CMAKE_BINARY_DIR}/${PROJECT_NAME}.pdb")
+        set(CMAKE_CXX_FLAGS_MINSIZEREL "${CMAKE_CXX_FLAGS_MINSIZEREL} /MT /Zi /Fd${CMAKE_BINARY_DIR}/${PROJECT_NAME}.pdb")
+        set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} /MT /Fd${CMAKE_BINARY_DIR}/${PROJECT_NAME}.pdb")
     endif()
 endif()
 
@@ -49,11 +52,11 @@ set(SOURCE_FILES
 )
 
 if(BUILD_STATIC)
-    add_library(Lexi STATIC ${SOURCE_FILES})
+    add_library(lexi STATIC ${SOURCE_FILES})
 else()
-    add_library(Lexi SHARED ${SOURCE_FILES})
+    add_library(lexi SHARED ${SOURCE_FILES})
 endif()
-set_target_properties(Lexi PROPERTIES OUTPUT_NAME lexi)
+set(LEXI_LIBRARIES lexi)
 
 # EXAMPLES
 # --------
@@ -81,17 +84,24 @@ if(BUILD_TESTS)
     if(NOT TARGET gtest)
         add_subdirectory(googletest)
     endif()
-    add_executable(LexiTests ${TEST_FILES})
-    target_link_libraries(LexiTests
+    include_directories(googletest/googletest/include)
+
+    add_executable(lexi_tests ${TEST_FILES})
+    target_link_libraries(lexi_tests
         gtest
         gtest_main
-        Lexi
+        ${LEXI_LIBRARIES}
     )
-    set_target_properties(LexiTests PROPERTIES OUTPUT_NAME test)
+    # Need to specify proper exception handling for Windows.
+    if(MSVC)
+        set_target_properties(lexi_tests PROPERTIES
+            COMPILE_OPTIONS "/EHsc"
+        )
+    endif()
 
-     add_custom_target(check_lexi
-        COMMAND $<TARGET_FILE:LexiTests>
-        DEPENDS LexiTests
+    add_test(NAME lexi_tests
+        COMMAND lexi_tests
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
     )
 endif()
 
