@@ -1,6 +1,8 @@
 Lexi
 ====
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/103c3c4c3b1f4508ae34278366cacdaf)](https://www.codacy.com/app/Alexhuszagh/lexi?utm_source=github.com&utm_medium=referral&utm_content=Alexhuszagh/lexi&utm_campaign=badger)
+
 Lexi, for lexical, is a fast conversion library to and from lexical forms. Internally, Lexi uses code from Milo Yip's [dtoa and itoa](https://github.com/miloyip/rapidjson) implementation for double and integer conversions, respectively, and adds type detection as well as other overloads for fast lexical conversions.
 
 **Table of Contents**
