@@ -1,7 +1,7 @@
 #  :copyright: (c) 2015-2017 The Regents of the University of California.
 #  :license: MIT, see LICENSE.md for more details.
 
-cmake_minimum_required(VERSION 3.4)
+cmake_minimum_required(VERSION 2.8)
 project(Lexi CXX)
 
 # FLAGS
