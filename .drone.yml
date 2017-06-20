@@ -1,0 +1,17 @@
+build:
+  image: teaci/msys$$arch
+  pull: true
+  shell: msys$$arch
+  commands:
+    - if [ $$arch = 32 ]; then target=i686; fi
+    - if [ $$arch = 64 ]; then target=x86_64; fi
+    - pacman -S --needed --noconfirm --noprogressbar mingw-w64-${target}-pkg-config
+    - cd build
+    - cmake -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTS=ON ..
+    - make -j 8
+    - ctest -C Release -V
+
+matrix:
+  arch:
+    - 64
+    - 32
