@@ -8,6 +8,7 @@ enable_testing()
 # FLAGS
 # -----
 
+set(CMAKE_LEGACY_CYGWIN_WIN32 0)
 set(CMAKE_CXX_STANDARD 14)
 set(CXX_STANDARD TRUE)
 
