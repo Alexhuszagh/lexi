@@ -8,9 +8,9 @@ build:
     - pacman -S --needed --noconfirm --noprogressbar mingw-w64-${target}-pkg-config cmake
     - git submodule update --init --recursive
     - cd build
-    - cmake -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTS=ON ..
+    - cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=ON ..
     - make -j 8
-    - ctest -C Release -V
+    - make -j 8 test
 
 matrix:
   arch:
