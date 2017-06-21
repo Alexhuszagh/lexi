@@ -106,8 +106,14 @@ ExtractNull::ExtractNull(const std::string &string)
 }
 
 
-/** \brief Conversion to nullptr.
- */
+std::nullptr_t ExtractNull::null() const
+{
+    // WARNING: This is used as a patch for MSVC, where functional-style
+    // type-casts are not allowed with std::nullptr_t.
+    return nullptr;
+}
+
+
 ExtractNull::operator std::nullptr_t() const
 {
     return nullptr;

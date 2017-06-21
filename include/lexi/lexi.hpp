@@ -87,7 +87,7 @@ struct Extract
     enable_if_t<is_null_pointer_v<U>, T>
     operator()(const std::string &string)
     {
-        return T(ExtractNull(string));
+        return ExtractNull(string).null();
     }
 
     template <typename U = T>
@@ -141,11 +141,8 @@ struct Extract
 
 /** \brief Extract value from string.
  */
-template <
-    typename T,
-    typename = enable_if_t<!is_string_v<T>, T>
->
-T lexi(const std::string &string)
+template <typename T>
+T lexi(const std::string &string, enable_if_t<!is_string_v<T>, T>* = nullptr)
 {
     return Extract<T>()(string);
 }
@@ -153,11 +150,8 @@ T lexi(const std::string &string)
 
 /** \brief Extract value from string literal.
  */
-template <
-    typename T,
-    typename = enable_if_t<!is_string_v<T>, T>
->
-T lexi(const char *string)
+template <typename T>
+T lexi(const char *string, enable_if_t<!is_string_v<T>, T>* = nullptr)
 {
     return Extract<T>()(string);
 }
@@ -165,11 +159,8 @@ T lexi(const char *string)
 
 /** \brief Format value to string.
  */
-template <
-    typename T,
-    enable_if_t<!is_string_v<T>, T>* = nullptr
->
-std::string lexi(const T &t)
+template <typename T>
+std::string lexi(const T &t, enable_if_t<!is_string_v<T>, T>* = nullptr)
 {
     return Format()(t).string();
 }
@@ -177,11 +168,8 @@ std::string lexi(const T &t)
 
 /** \brief Overload for existing string types.
  */
-template <
-    typename T,
-    enable_if_t<is_string_v<T>, T>* = nullptr
->
-std::string lexi(const T &string)
+template <typename T>
+std::string lexi(const T &string, enable_if_t<is_string_v<T>, T>* = nullptr)
 {
     return string;
 }
@@ -189,11 +177,8 @@ std::string lexi(const T &string)
 
 /** \brief Format value to string.
  */
-template <
-    typename T,
-    enable_if_t<!is_string_v<T>, T>* = nullptr
->
-std::string string(const T &t)
+template <typename T>
+std::string string(const T &t, enable_if_t<!is_string_v<T>, T>* = nullptr)
 {
     return Format()(t).string();
 }
@@ -202,11 +187,8 @@ std::string string(const T &t)
 
 /** \brief Overload for existing string types.
  */
-template <
-    typename T,
-    enable_if_t<is_string_v<T>, T>* = nullptr
->
-std::string string(const T &string)
+template <typename T>
+std::string string(const T &string, enable_if_t<is_string_v<T>, T>* = nullptr)
 {
     return string;
 }
@@ -214,11 +196,8 @@ std::string string(const T &string)
 
 /** \brief Format escaped value to string.
  */
-template <
-    typename T,
-    enable_if_t<!is_string_v<T>, T>* = nullptr
->
-std::string escape(const T &t)
+template <typename T>
+std::string escape(const T &t, enable_if_t<!is_string_v<T>, T>* = nullptr)
 {
     return Format()(t).escape();
 }
@@ -226,11 +205,8 @@ std::string escape(const T &t)
 
 /** \brief Escape existing string.
  */
-template <
-    typename T,
-    enable_if_t<is_string_v<T>, T>* = nullptr
->
-std::string escape(const T &string)
+template <typename T>
+std::string escape(const T &string, enable_if_t<is_string_v<T>, T>* = nullptr)
 {
     return detail::escape(string);
 }
@@ -238,11 +214,8 @@ std::string escape(const T &string)
 
 /** \brief Format value to JSON-literal.
  */
-template <
-    typename T,
-    enable_if_t<!is_string_v<T>, T>* = nullptr
->
-std::string jsonify(const T &t)
+template <typename T>
+std::string jsonify(const T &t, enable_if_t<!is_string_v<T>, T>* = nullptr)
 {
     return Format()(t).jsonify();
 }
@@ -250,11 +223,8 @@ std::string jsonify(const T &t)
 
 /** \brief Format string to JSON-literal.
  */
-template <
-    typename T,
-    enable_if_t<is_string_v<T>, T>* = nullptr
->
-std::string jsonify(const T &string)
+template <typename T>
+std::string jsonify(const T &string, enable_if_t<is_string_v<T>, T>* = nullptr)
 {
     return "\"" + detail::jsonify(string) + "\"";
 }

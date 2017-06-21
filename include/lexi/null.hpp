@@ -48,6 +48,8 @@ struct ExtractNull
 {
     ExtractNull(const std::string &string);
 
+    std::nullptr_t null() const;
+
     // CONVERSIONS
     explicit operator std::nullptr_t() const;
 };
