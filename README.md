@@ -43,6 +43,8 @@ Lexi is continually built with the following compiler and compiler versions:
 - Clang 3.8+
 - GCC 5.3+
 - MinGW 5.3.0 (MXE, MinGW, and MSYS2) 
+- Visual Studio 14 2015
+- Visual Studio 15 2017
 
 ## Acknowledgments
 
